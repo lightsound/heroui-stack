@@ -1,3 +1,4 @@
+import { Button } from "@heroui/react";
 import { cn } from "@lightsound/cn/tw-merge";
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
@@ -14,9 +15,7 @@ function Home() {
         <h1 className={cn("text-5xl font-bold text-red-500", isBlue && "text-blue-500")}>
           Hello World!
         </h1>
-        <button type="button" onClick={() => setIsBlue((prev) => !prev)}>
-          Toggle
-        </button>
+        <Button onPress={() => setIsBlue((prev) => !prev)}>Toggle</Button>
       </div>
     </main>
   );
