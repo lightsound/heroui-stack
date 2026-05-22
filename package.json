@@ -14,14 +14,23 @@
     "type-check": "vp check --no-lint"
   },
   "dependencies": {
+    "@heroui-pro/react": "1.0.0-beta.4",
     "@heroui/react": "^3.0.5",
     "@heroui/styles": "^3.0.5",
     "@lightsound/cn": "^2.0.2",
+    "@number-flow/react": "^0.6.0",
     "@tanstack/react-router": "^1.170.7",
     "@tanstack/react-start": "^1.168.10",
+    "embla-carousel": "^8.6.0",
+    "embla-carousel-react": "^8.6.0",
+    "motion": "^12.40.0",
     "react": "^19.2.6",
+    "react-aria-components": "^1.17.0",
     "react-dom": "^19.2.6",
-    "tailwind-merge": "^3.6.0"
+    "react-resizable-panels": "^4.11.1",
+    "recharts": "^3.8.1",
+    "tailwind-merge": "^3.6.0",
+    "tailwind-variants": "^3.2.2"
   },
   "devDependencies": {
     "@rolldown/plugin-babel": "^0.2.3",

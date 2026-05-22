@@ -2,7 +2,10 @@ overrides:
   vite: npm:@voidzero-dev/vite-plus-core@latest
   vitest: npm:@voidzero-dev/vite-plus-test@latest
 
-onlyBuiltDependencies:
-  - esbuild
+allowBuilds:
+  esbuild: true
+  heroui-pro: true
+  "@heroui-pro/react": true
+  heroui-native-pro: true
 
 minimumReleaseAge: 0
