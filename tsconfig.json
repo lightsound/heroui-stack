@@ -17,7 +17,9 @@
     "isolatedModules": true,
     "verbatimModuleSyntax": true,
     "resolveJsonModule": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+
+    "allowImportingTsExtensions": true
   },
-  "include": ["src"]
+  "include": ["src", "tools/html-to-astro"]
 }

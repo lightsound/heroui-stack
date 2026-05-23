@@ -12,7 +12,7 @@ const reactDoctorRules = {
 
 export default defineConfig({
   fmt: {
-    ignorePatterns: ["**/routeTree.gen.ts"],
+    ignorePatterns: ["**/routeTree.gen.ts", ".cursor/**"],
     sortImports: {
       partitionByComment: true,
     },
@@ -31,7 +31,7 @@ export default defineConfig({
       browser: true,
       node: true,
     },
-    ignorePatterns: ["**/routeTree.gen.ts"],
+    ignorePatterns: ["**/routeTree.gen.ts", ".cursor/**"],
     jsPlugins: [{ name: "react-doctor", specifier: "oxlint-plugin-react-doctor" }],
     options: {
       denyWarnings: true,
@@ -43,6 +43,16 @@ export default defineConfig({
         files: ["src/router.tsx", "*.config.ts"],
         rules: {
           "no-default-export": "off",
+        },
+      },
+      {
+        files: ["tools/html-to-astro/**/*.ts"],
+        rules: {
+          "no-default-export": "off",
+          "react-doctor/js-combine-iterations": "off",
+          "react-doctor/js-set-map-lookups": "off",
+          "react-doctor/js-index-maps": "off",
+          "react-doctor/async-await-in-loop": "off",
         },
       },
     ],
@@ -66,6 +76,6 @@ export default defineConfig({
     tsconfigPaths: true,
   },
   test: {
-    include: ["src/**/*.test.ts", "src/**/*.test.tsx"],
+    include: ["src/**/*.test.ts", "src/**/*.test.tsx", "tools/html-to-astro/**/*.test.ts"],
   },
 });

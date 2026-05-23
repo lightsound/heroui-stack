@@ -1,0 +1,267 @@
+{
+  "fixtures": [
+    {
+      "id": "001-simple",
+      "description": "Single page with external CSS",
+      "tags": ["static", "css", "single-page"],
+      "smoke": true,
+      "source": { "type": "dir", "path": "../simple" },
+      "expect": {
+        "pages": 1,
+        "outputContains": ["Hello", "BaseLayout"]
+      }
+    },
+    {
+      "id": "002-multi",
+      "description": "Two static HTML pages",
+      "tags": ["static", "multi-page"],
+      "smoke": true,
+      "source": { "type": "dir", "path": "../multi" },
+      "expect": { "pages": 2 }
+    },
+    {
+      "id": "003-extract",
+      "description": "Repeated card blocks with --extract",
+      "tags": ["static", "extract"],
+      "source": { "type": "dir", "path": "../extract" },
+      "convert": { "extract": true, "extractThreshold": 0.5 },
+      "expect": { "pages": 1, "componentsMin": 1 }
+    },
+    {
+      "id": "004-realistic",
+      "description": "HTML + CSS + JS with shared nav and Workers exclusions",
+      "tags": ["static", "css", "js", "multi-page", "workers"],
+      "smoke": true,
+      "source": { "type": "dir", "path": "../realistic" },
+      "expect": {
+        "pages": 2,
+        "excludedMin": 2,
+        "excludedReasons": ["CommonJS require"],
+        "warningsContain": ["onclick"],
+        "publicFiles": ["images/dot.png"],
+        "outputContains": ["/scripts/app.js", "is:inline"],
+        "outputNotContains": ["require("]
+      }
+    }
+  ],
+  "generatedSuites": [
+    {
+      "prefix": "010-single-html",
+      "recipe": "single-html",
+      "tags": ["generated", "single-page"],
+      "expect": { "pages": 1 },
+      "variants": [{}, {}, {}]
+    },
+    {
+      "prefix": "020-html-css",
+      "recipe": "html-css",
+      "tags": ["generated", "css", "single-page"],
+      "expect": { "pages": 1 },
+      "variants": [{}, {}, {}]
+    },
+    {
+      "prefix": "030-html-css-js",
+      "recipe": "html-css-js",
+      "tags": ["generated", "css", "js", "single-page"],
+      "expect": { "pages": 1, "outputContains": ["is:inline"] },
+      "variants": [{}, {}, {}, {}, {}]
+    },
+    {
+      "prefix": "040-multi-page",
+      "recipe": "multi-page",
+      "tags": ["generated", "multi-page"],
+      "expect": { "pagesMin": 3 },
+      "variants": [
+        { "count": 3 },
+        { "count": 4 },
+        { "count": 5 },
+        { "count": 6 },
+        { "count": 7 },
+        { "count": 8 },
+        { "count": 9 },
+        { "count": 10 },
+        { "count": 11 },
+        { "count": 12 },
+        { "count": 13 },
+        { "count": 14 }
+      ]
+    },
+    {
+      "prefix": "050-nested-path",
+      "recipe": "nested-path",
+      "tags": ["generated", "multi-page", "nested"],
+      "expect": { "pagesMin": 2 },
+      "variants": [
+        { "path": "blog/post.html" },
+        { "path": "docs/guide.html" },
+        { "path": "docs/api/reference.html" },
+        { "path": "news/2024/launch.html" },
+        { "path": "support/faq.html" },
+        { "path": "products/item-a.html" },
+        { "path": "team/engineering.html" },
+        { "path": "legal/privacy.html" },
+        { "path": "events/spring.html" },
+        { "path": "archive/2023/summary.html" }
+      ]
+    },
+    {
+      "prefix": "060-workers-bad",
+      "recipe": "workers-bad",
+      "tags": ["generated", "workers"],
+      "expect": {
+        "pages": 1,
+        "excludedMin": 1,
+        "outputNotContains": ["require('fs')", "process.exit"]
+      },
+      "variants": [
+        { "pattern": "require" },
+        { "pattern": "process" },
+        { "pattern": "dirname" },
+        { "pattern": "external" }
+      ]
+    },
+    {
+      "prefix": "070-interaction",
+      "recipe": "interaction",
+      "tags": ["generated", "interaction"],
+      "expect": { "pages": 1, "warningsMin": 1 },
+      "variants": [
+        { "attr": "onclick" },
+        { "attr": "onchange" },
+        { "attr": "onsubmit" },
+        { "attr": "oninput" },
+        { "attr": "onkeydown" },
+        { "attr": "onkeyup" }
+      ]
+    },
+    {
+      "prefix": "080-unsupported",
+      "recipe": "unsupported",
+      "tags": ["generated", "unsupported"],
+      "expect": { "pages": 1, "warningsMin": 1 },
+      "variants": [{ "kind": "iframe" }, { "kind": "template" }, { "kind": "web-component" }]
+    },
+    {
+      "prefix": "090-css-url",
+      "recipe": "css-url",
+      "tags": ["generated", "css", "assets"],
+      "expect": { "pages": 1 },
+      "variants": [
+        { "assetPath": "images/dot.png" },
+        { "assetPath": "assets/bg.png" },
+        { "assetPath": "media/icon.png" },
+        { "assetPath": "img/sprite.png" }
+      ]
+    },
+    {
+      "prefix": "100-extract-cards",
+      "recipe": "extract-cards",
+      "tags": ["generated", "extract"],
+      "convert": { "extract": true, "extractThreshold": 0.5 },
+      "expect": { "pages": 1, "componentsMin": 1 },
+      "variants": [{ "cards": 2 }, { "cards": 3 }, { "cards": 4 }, { "cards": 5 }, { "cards": 6 }]
+    },
+    {
+      "prefix": "110-slug-collision",
+      "recipe": "slug-collision",
+      "tags": ["generated", "slug"],
+      "expect": { "pagesMin": 1 },
+      "variants": [
+        { "scenario": "blog-index" },
+        { "scenario": "api-reserved" },
+        { "scenario": "docs" },
+        { "scenario": "help" },
+        { "scenario": "shop" }
+      ]
+    },
+    {
+      "prefix": "120-deep-path",
+      "recipe": "deep-path",
+      "tags": ["generated", "nested"],
+      "expect": { "pagesMin": 2 },
+      "variants": [
+        { "depth": 2 },
+        { "depth": 3 },
+        { "depth": 4 },
+        { "depth": 5 },
+        { "depth": 6 },
+        { "depth": 7 }
+      ]
+    },
+    {
+      "prefix": "130-many-pages",
+      "recipe": "many-pages",
+      "tags": ["generated", "multi-page", "scale"],
+      "expect": { "pagesMin": 8 },
+      "variants": [
+        { "count": 8 },
+        { "count": 10 },
+        { "count": 12 },
+        { "count": 15 },
+        { "count": 18 },
+        { "count": 20 },
+        { "count": 22 },
+        { "count": 25 },
+        { "count": 28 },
+        { "count": 30 }
+      ]
+    },
+    {
+      "prefix": "140-zip",
+      "recipe": "html-css",
+      "sourceType": "zip",
+      "tags": ["generated", "zip"],
+      "expect": { "pages": 1 },
+      "variants": [{}, {}, {}, {}, {}]
+    },
+    {
+      "prefix": "150-module-script",
+      "recipe": "module-script",
+      "tags": ["generated", "js"],
+      "expect": { "pages": 1, "outputContains": ["is:inline"] },
+      "variants": [{}, {}, {}]
+    },
+    {
+      "prefix": "160-double-stylesheet",
+      "recipe": "double-stylesheet",
+      "tags": ["generated", "css"],
+      "expect": { "pages": 1 },
+      "variants": [{}, {}]
+    },
+    {
+      "prefix": "170-minimal-html",
+      "recipe": "minimal-html",
+      "tags": ["generated", "minimal"],
+      "expect": { "pages": 1 },
+      "variants": [{}, {}]
+    },
+    {
+      "prefix": "180-form",
+      "recipe": "form",
+      "tags": ["generated", "form", "interaction"],
+      "expect": { "pages": 1, "warningsContain": ["onsubmit"] },
+      "variants": [{}, {}]
+    },
+    {
+      "prefix": "190-inline-compatible",
+      "recipe": "inline-compatible",
+      "tags": ["generated", "js"],
+      "expect": { "pages": 1, "outputContains": ["is:inline"] },
+      "variants": [{}, {}]
+    },
+    {
+      "prefix": "200-unicode",
+      "recipe": "unicode",
+      "tags": ["generated", "i18n"],
+      "expect": { "pages": 1, "outputContains": ["日本語"] },
+      "variants": [{}, {}]
+    },
+    {
+      "prefix": "210-external-http",
+      "recipe": "external-http",
+      "tags": ["generated", "external"],
+      "expect": { "pages": 1, "outputContains": ["cdn.example.com"] },
+      "variants": [{}, {}]
+    }
+  ]
+}
